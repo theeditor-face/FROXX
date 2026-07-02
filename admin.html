@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FROXX愛 | Master Deck</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <nav class="premium-nav sticky top-0 z-50 px-6 py-4 w-full flex justify-between items-center border-b border-sky-100">
+        <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+            <span class="text-xl font-black tracking-wider text-slate-900">FROXX<span class="text-sky-500">愛</span> <span class="text-xs text-slate-400 font-medium ml-2 uppercase tracking-widest">Control Terminal</span></span>
+            <a href="index.html" class="text-xs font-bold tracking-wider text-sky-600 hover:text-sky-700 uppercase transition">&larr; Public View</a>
+        </div>
+    </nav>
+
+    <div id="auth-gate-panel" class="flex-grow flex items-center justify-center px-4">
+        <div class="bg-white border border-sky-100 shadow-2xl rounded-3xl p-8 max-w-sm w-full text-center space-y-6">
+            <div class="text-3xl">🔑</div>
+            <div class="space-y-1">
+                <h2 class="text-xl font-black text-slate-900 uppercase tracking-tight">Security Verification</h2>
+                <p class="text-xs text-slate-400">Enter your core clearance matrix password key.</p>
+            </div>
+            <div>
+                <input type="password" id="gate-key-input" class="w-full bg-slate-50 border border-slate-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 rounded-xl px-4 py-3 text-sm text-center font-mono outline-none transition" placeholder="••••••••">
+            </div>
+            <button id="auth-submit-btn" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-4 rounded-xl text-xs tracking-widest uppercase transition shadow-lg shadow-sky-500/20 active:scale-95">
+                Verify Signature
+            </button>
+        </div>
+    </div>
+
+    <main id="admin-workspace-deck" class="hidden max-w-5xl w-full mx-auto px-6 py-12 flex-grow space-y-12">
+        <div class="border-b border-slate-100 pb-6">
+            <h1 class="text-2xl font-black text-slate-900 tracking-tight uppercase">Repository Content Deck</h1>
+            <p class="text-xs text-slate-400">Deploy, manage, or delete items inside your active database tables instantly.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-1 bg-white border border-sky-100 shadow-xl rounded-2xl p-6 space-y-5">
+                <h3 class="text-xs font-black tracking-widest text-sky-600 uppercase">Deploy Component</h3>
+                <form id="upload-panel-form" class="space-y-4">
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold tracking-wider uppercase text-slate-500">Asset Title</label>
+                        <input type="text" id="asset-title-field" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-sky-400 transition" placeholder="e.g., Smooth Blur Shake">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold tracking-wider uppercase text-slate-500">Operational Module Type</label>
+                        <select id="asset-module-field" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-sky-400 transition">
+                            <option value="amv-editing">AMV Editing</option>
+                            <option value="tiktok-style">TikTok & Shorts</option>
+                            <option value="professional">Professional Presets</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold tracking-wider uppercase text-slate-500">Component Tag (Format)</label>
+                        <input type="text" id="asset-type-field" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-sky-400 transition" placeholder="e.g., XML, LUT, PRESET">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold tracking-wider uppercase text-slate-500">Direct Download Link</label>
+                        <input type="url" id="asset-download-field" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-sky-400 transition" placeholder="https://drive.google.com/...">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[10px] font-bold tracking-wider uppercase text-slate-500">Video Preview Stream Link (Optional)</label>
+                        <input type="url" id="asset-preview-field" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-xs outline-none focus:border-sky-400 transition" placeholder="https://yourlink.mp4">
+                    </div>
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold tracking-widest py-3 rounded-xl uppercase transition mt-2">
+                        Push Component Live
+                    </button>
+                </form>
+            </div>
+
+            <div class="lg:col-span-2 bg-white border border-sky-100 shadow-xl rounded-2xl p-6 space-y-4">
+                <h3 class="text-xs font-black tracking-widest text-sky-600 uppercase">Live Manifest</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead>
+                            <tr class="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider">
+                                <th class="pb-3 font-medium">Title/Module</th>
+                                <th class="pb-3 font-medium">Format</th>
+                                <th class="pb-3 text-right font-medium">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-manifest-rows" class="divide-y divide-slate-50">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full bg-white border-t border-slate-100 py-6 text-center text-xs text-slate-400 font-medium">
+        &copy; 2026 FROXX愛. Authorized system session.
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/admin-panel.js"></script>
+</body>
+</html>

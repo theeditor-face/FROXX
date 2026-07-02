@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FROXX愛 | Asset View</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <nav class="premium-nav sticky top-0 z-50 px-6 py-4 w-full flex justify-between items-center border-b border-sky-100">
+        <div class="max-w-7xl mx-auto w-full flex items-center justify-between">
+            <div id="secret-logo-zone" class="cursor-pointer select-none transition-transform active:scale-90">
+                <img src="https://images.vrm.dev/i/2026/07/02/IMG_20260625232806901.jpg" alt="FROXX" class="w-12 h-12 rounded-2xl object-cover shadow-md border-2 border-sky-400/20">
+            </div>
+            <a href="index.html" class="text-xs font-bold tracking-wider text-sky-600 hover:text-sky-700 uppercase transition">&larr; Catalog Matrix</a>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl w-full mx-auto px-6 py-12 flex-grow">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+            
+            <div class="lg:col-span-3">
+                <div id="preview-window-frame" class="relative aspect-video w-full bg-white border border-sky-100 rounded-3xl overflow-hidden flex items-center justify-center shadow-lg">
+                    <div class="text-xs text-slate-400 font-bold tracking-widest animate-pulse uppercase">Syncing Visual Stream Engine...</div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 bg-white border border-sky-100 shadow-xl rounded-3xl p-6 space-y-6">
+                <div class="space-y-2">
+                    <span id="asset-type-badge" class="text-[9px] font-black uppercase bg-sky-50 text-sky-500 border border-sky-100 px-2 py-0.5 rounded tracking-widest inline-block">Format</span>
+                    <h1 id="asset-display-title" class="text-xl font-black text-slate-900 tracking-tight leading-tight uppercase">Loading Data Record...</h1>
+                    <div class="text-[11px] text-slate-400 font-semibold flex items-center gap-3">
+                        <span id="asset-timestamp">--/--/----</span>
+                        <span class="w-1 h-1 rounded-full bg-slate-200"></span>
+                        <span id="asset-counter" class="text-sky-500">0 views</span>
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-2">
+                    <button onclick="executeDownloadRequest()" class="w-full bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 rounded-2xl text-xs tracking-widest uppercase transition shadow-lg shadow-sky-500/20 active:scale-95 text-center">
+                        Execute Acquisition Pipeline
+                    </button>
+                    <button onclick="copyCurrentAssetUrl()" class="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 text-slate-600 font-bold py-3 rounded-2xl text-xs tracking-wider uppercase transition active:scale-95">
+                        <span id="clipboard-btn-text">Copy Configuration Link</span>
+                    </button>
+                </div>
+
+                <div class="border-t border-slate-100 pt-5 flex items-center gap-4">
+                    <div class="bg-slate-50 p-2 rounded-2xl border border-slate-200/60 shrink-0 shadow-inner">
+                        <img id="companion-qr-matrix" src="" alt="Mobile QR" class="w-16 h-16 object-contain mix-blend-multiply block">
+                    </div>
+                    <div class="space-y-0.5">
+                        <h4 class="text-xs font-black text-slate-900 uppercase tracking-wide">Mobile Companion Sync</h4>
+                        <p class="text-[10px] text-slate-400 font-medium leading-normal">Scan with your smartphone camera device to import configuration setups cleanly into your editing workflow systems.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="w-full bg-white border-t border-slate-100 py-6 text-center text-xs text-slate-400 font-medium">
+        &copy; 2026 FROXX愛. Terminated intentionally.
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/asset.js"></script>
+</body>
+</html>
