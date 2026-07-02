@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FROXX愛 | Premium Creator Repository</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            background-color: #0B0B0F;
+            color: #F3F4F6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        /* Custom sleek scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0B0B0F; }
+        ::-webkit-scrollbar-thumb { background: #A855F7; border-radius: 10px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden selection:bg-purple-500/30">
+
+    <div id="announcement-bar" class="hidden bg-gradient-to-r from-purple-900 to-indigo-900 text-center py-2 px-4 text-xs font-semibold tracking-wide border-b border-purple-500/20 shadow-lg">
+        <span id="announcement-text">Loading network updates...</span>
+    </div>
+
+    <nav class="w-full bg-[#12121A]/80 backdrop-blur-md border-b border-purple-900/20 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <div id="secret-logo" class="cursor-pointer transition-transform active:scale-95 select-none">
+                <img src="https://images.vrm.dev/i/2026/07/02/IMG_20260625232806901.jpg" alt="FROXX愛" class="w-12 h-12 rounded-lg border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.2)] object-cover">
+            </div>
+            <a href="index.html" class="text-xl font-black tracking-wider bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent hover:opacity-85 transition">FROXX愛</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <a href="admin.html" class="text-xs bg-purple-950/40 hover:bg-purple-900/40 text-purple-400 border border-purple-500/10 px-4 py-2 rounded-lg font-bold transition tracking-wider uppercase">Control Deck</a>
+        </div>
+    </nav>
+
+    <div id="audio-container" class="hidden fixed bottom-6 right-6 z-50 bg-[#12121A] border border-purple-500/20 px-4 py-2.5 rounded-full flex items-center gap-3 shadow-2xl backdrop-blur-md">
+        <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+        <span class="text-xs text-gray-400 font-medium tracking-wide">Background Audio</span>
+        <button id="audio-toggle" class="bg-purple-600 hover:bg-purple-700 text-white rounded-full p-1.5 transition active:scale-90">
+            <svg id="play-icon" class="w-4 h-4 hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="pause-icon" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+        </button>
+        <audio id="bg-audio" loop></audio>
+    </div>
+
+    <main class="max-w-7xl w-full mx-auto px-6 py-12 flex-grow space-y-16">
+        
+        <div class="text-center max-w-3xl mx-auto space-y-4 pt-4">
+            <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white leading-none uppercase">
+                Premium Creator <br>
+                <span class="text-transparent bg-gradient-to-r from-purple-400 via-indigo-200 to-purple-500 bg-clip-text">Repository</span>
+            </h1>
+            <p class="text-xs sm:text-sm text-gray-400 max-w-xl mx-auto leading-relaxed">
+                Access exclusive AMV assets, flawless editing configs, system presets, and custom overlays managed directly from the production deck.
+            </p>
+        </div>
+
+        <div id="featured-section" class="hidden space-y-4">
+            <div class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping"></span>
+                <h2 class="text-xs font-black tracking-widest text-purple-400 uppercase">Pinned Editor Showreels</h2>
+            </div>
+            <div id="featured-assets-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                </div>
+        </div>
+
+        <div class="space-y-4">
+            <h2 class="text-xs font-black tracking-widest text-purple-400 uppercase">Operational Modules</h2>
+            <div id="collections-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="animate-pulse bg-[#12121A]/50 border border-purple-500/5 h-36 rounded-2xl flex items-center justify-center text-xs text-gray-600">Connecting database arrays...</div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="w-full bg-[#12121A] border-t border-purple-900/20 px-6 py-6 text-center text-xs text-gray-500 space-y-3">
+        <div>&copy; 2026 FROXX愛. Engineered seamlessly.</div>
+        <div id="footer-socials" class="flex justify-center items-center gap-4 text-gray-400">
+            </div>
+    </footer>
+
+    <script>
+        // System Config Credentials
+        const SUPABASE_URL = "https://qzqbzhzlurticorzpotw.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF6cWJ6aHpsdXJ0aWNvcnpwb3R3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwMDAzMzcsImV4cCI6MjA5ODU3NjMzN30.TP5yJemsMUoJYivTr79UXSgQJAbFDFf1gv5vQcyR5Mg";
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // State Trackers
+        let logoClicks = 0;
+        let logoTimer = null;
+        let audioInitialized = false;
+
+        // --- 1. Admin Entrance Trigger Gate ---
+        document.getElementById('secret-logo').addEventListener('click', () => {
+            logoClicks++;
+            clearTimeout(logoTimer);
+            logoTimer = setTimeout(() => { logoClicks = 0; }, 2500);
+
+            if (logoClicks === 8) {
+                logoClicks = 0;
+                window.location.href = 'admin.html';
+            }
+        });
+
+        // --- 2. Master App Lifecycle Initializer ---
+        async function initializeApplication() {
+            try {
+                await Promise.all([
+                    loadAnnouncementBar(),
+                    loadBackgroundStream(),
+                    loadFooterSocials(),
+                    loadCollectionsLayout(),
+                    loadFeaturedAssets()
+                ]);
+            } catch (err) {
+                console.error("System asset load anomaly:", err);
+            }
+        }
+
+        async function loadAnnouncementBar() {
+            const { data } = await supabaseClient.from('announcements').select('*').eq('is_active', true).order('created_at', { ascending: false }).limit(1);
+            if (data && data.length > 0) {
+                document.getElementById('announcement-text').innerText = data[0].content;
+                document.getElementById('announcement-bar').classList.remove('hidden');
+            }
+        }
+
+        async function loadBackgroundStream() {
+            const { data } = await supabaseClient.from('site_settings').select('*').eq('key', 'bg_music').single();
+            if (data && data.value && data.value.url) {
+                const audio = document.getElementById('bg-audio');
+                audio.src = data.value.url;
+                document.getElementById('audio-container').classList.remove('hidden');
+
+                window.addEventListener('click', () => {
+                    if (!audioInitialized) {
+                        audio.play().catch(e => console.log("Audio contextual trigger deferred."));
+                        audioInitialized = true;
+                    }
+                }, { once: true });
+            }
+        }
+
+        const audioBtn = document.getElementById('audio-toggle');
+        const bgAudio = document.getElementById('bg-audio');
+        const playIcon = document.getElementById('play-icon');
+        const pauseIcon = document.getElementById('pause-icon');
+
+        audioBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (bgAudio.paused) {
+                bgAudio.play();
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+            } else {
+                bgAudio.pause();
+                pauseIcon.classList.add('hidden');
+                playIcon.classList.remove('hidden');
+            }
+        });
+
+        async function loadFooterSocials() {
+            const { data } = await supabaseClient.from('social_links').select('*');
+            if (data && data.length > 0) {
+                document.getElementById('footer-socials').innerHTML = data.map(link => `
+                    <a href="${link.url}" target="_blank" class="hover:text-purple-400 transition font-medium tracking-wide">${link.platform_name}</a>
+                `).join('');
+            }
+        }
+
+        async function loadCollectionsLayout() {
+            const { data: cols } = await supabaseClient.from('collections').select('*').order('name');
+            const grid = document.getElementById('collections-grid');
+
+            if (cols && cols.length > 0) {
+                grid.innerHTML = cols.map(c => `
+                    <a href="section.html?page=${c.slug}" class="group bg-[#12121A] border border-purple-500/10 hover:border-purple-500/40 p-6 rounded-2xl block transition-all duration-300 shadow-xl relative overflow-hidden">
+                        <div class="absolute -bottom-4 -right-4 text-6xl opacity-5 group-hover:scale-110 transition-transform">📂</div>
+                        <div class="text-xl mb-2 text-purple-500">📁</div>
+                        <h3 class="text-base font-bold text-white group-hover:text-purple-400 transition tracking-tight uppercase">${c.name}</h3>
+                        <p class="text-[11px] text-gray-500 mt-1 leading-normal">Open directory parameters to extract production files, packs and custom project structures.</p>
+                    </a>
+                `).join('');
+            } else {
+                // Guaranteed fallback modules so the site never looks empty or broken
+                grid.innerHTML = `
+                    <a href="section.html?page=amv-editing" class="group bg-[#12121A] border border-purple-500/10 hover:border-purple-500/40 p-6 rounded-2xl block transition-all duration-300 shadow-xl">
+                        <div class="text-xl mb-2">🎬</div>
+                        <h3 class="text-sm font-bold text-white group-hover:text-purple-400 transition uppercase tracking-tight">AMV Editing Matrix</h3>
+                        <p class="text-[11px] text-gray-500 mt-1 leading-normal">Presets, adjustments, and visual project assets engineered for high-end AMV output.</p>
+                    </a>
+                    <a href="section.html?page=tiktok-style" class="group bg-[#12121A] border border-purple-500/10 hover:border-purple-500/40 p-6 rounded-2xl block transition-all duration-300 shadow-xl">
+                        <div class="text-xl mb-2">📱</div>
+                        <h3 class="text-sm font-bold text-white group-hover:text-purple-400 transition uppercase tracking-tight">TikTok & Shorts Style</h3>
+                        <p class="text-[11px] text-gray-500 mt-1 leading-normal">Velocity loops, clean high-retention composition packs, and vertical aspect files.</p>
+                    </a>
+                    <a href="section.html?page=professional" class="group bg-[#12121A] border border-purple-500/10 hover:border-purple-500/40 p-6 rounded-2xl block transition-all duration-300 shadow-xl">
+                        <div class="text-xl mb-2">💼</div>
+                        <h3 class="text-sm font-bold text-white group-hover:text-purple-400 transition uppercase tracking-tight">Professional Presets</h3>
+                        <p class="text-[11px] text-gray-500 mt-1 leading-normal">Premium tracking maps, direct system XML blueprints, custom macros and LUT maps.</p>
+                    </a>
+                `;
+            }
+        }
+
+        async function loadFeaturedAssets() {
+            const { data: featured } = await supabaseClient.from('uploads').select('*').eq('is_featured', true).eq('status', 'published').limit(2);
+            if (featured && featured.length > 0) {
+                document.getElementById('featured-section').classList.remove('hidden');
+                document.getElementById('featured-assets-grid').innerHTML = featured.map(item => `
+                    <div onclick="window.location.href='asset.html?id=${item.id}'" class="group bg-[#12121A] border border-purple-500/20 hover:border-purple-500/50 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 flex flex-col sm:flex-row shadow-2xl">
+                        <div class="sm:w-2/5 aspect-video sm:aspect-auto bg-black/40 relative overflow-hidden flex items-center justify-center min-h-[140px]">
+                            ${item.preview_video_url ? `
+                                <video src="${item.preview_video_url}" class="w-full h-full object-cover muted loop playsinline autoplay pointer-events-none opacity-80 group-hover:opacity-100 transition"></video>
+                            ` : `
+                                <span class="text-[10px] tracking-widest font-black text-purple-500/30 uppercase">${item.type}</span>
+                            `}
+                            <span class="absolute top-3 left-3 bg-purple-600 text-[9px] uppercase tracking-widest font-black px-2 py-0.5 rounded-md shadow-md">${item.type}</span>
+                        </div>
+                        <div class="p-5 sm:w-3/5 flex flex-col justify-between space-y-4">
+                            <div class="space-y-1">
+                                <h3 class="font-bold text-sm sm:text-base text-white tracking-tight group-hover:text-purple-400 transition line-clamp-2">${item.title}</h3>
+                                <p class="text-[11px] text-gray-500">Curated high-priority master release file container.</p>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] font-mono text-purple-400/70 pt-2 border-t border-purple-900/10">
+                                <span>${new Date(item.created_at).toLocaleDateString()}</span>
+                                <span class="bg-[#0B0B0F] px-2 py-0.5 rounded border border-purple-500/5 text-gray-400">${item.views_count} views</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Initialize application loops
+        initializeApplication();
+    </script>
+</body>
+</html>
